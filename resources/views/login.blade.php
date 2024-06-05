@@ -45,7 +45,7 @@
                 </div>
                 <p class="text-center my-1">Atau</p>
                 <div class="d-flex justify-content-center">
-                    <a href="#" class="w-50 btn btn-lg btn-info mt-2"> <i class="fab fa-google">
+                    <a href="{{ route('login_google') }}" class="w-50 btn btn-lg btn-info mt-2"> <i class="fab fa-google">
                         </i> Login Google</a>
                 </div>
             </form>

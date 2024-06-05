@@ -19,6 +19,9 @@
 -   php artisan key:generate
 -   php php artisan migrate
 -   php artisan db:seed --class=CreateRole
+-   composer require laravel/socialite (jika perlu)
+-   composer require spatie/laravel-permission (jika perlu)
+-   php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" (jika perlu)
 -   php artisan storage:link (jika perlu)
 -   php artisan serve
 
