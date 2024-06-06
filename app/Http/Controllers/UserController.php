@@ -151,4 +151,35 @@ class UserController extends Controller
         return redirect()->route('home_page');
     }
 
+    //Show Profile
+    public function showProfile()
+    {
+        $user = Auth::user();
+        return view('profile', compact('user'));
+    }
+
+    //Edit Profile
+    public function editProfile()
+    {
+        return view('profileEdit');
+    }
+
+    // bookmark
+    public function showBookmark()
+    {
+        return view('bookmark');
+    }
+
+    //catatan
+    public function showCatatan()
+    {
+        return view('catatan');
+    }
+
+    //materi
+    public function showMateri()
+    {
+        return view('materi');
+    }
+
 }

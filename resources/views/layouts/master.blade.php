@@ -34,19 +34,25 @@
                                     <a class="nav-link" href="{{ route('home_page') }}">HOME</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">PRODUCTS</a>
+                                    <a class="nav-link" href="{{ route('bookmark.show') }}">Bookmark</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('catatan.show') }}">Catatan</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('materi.show') }}">Materi</a>
+                                </li>
+                                {{-- <li class="nav-item">
                                     <a class="nav-link"
                                         href="{{ route('home_page', ['user' => auth()->user()->id]) }}">MANAGE PRODUCTS</a>
-                                </li>
+                                </li> --}}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button"
                                         data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="fa-regular fa-circle-user fa-xl me-2"></i>{{ auth()->user()->nama }}
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('profile.show') }}">Profile</a></li>
                                         <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                                     </ul>
                                 </li>
@@ -56,7 +62,13 @@
                                     <a class="nav-link" href="{{ route('home_page') }}">HOME</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">PRODUCTS</a>
+                                    <a class="nav-link" href="{{ route('bookmark.show') }}">Bookmark</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('catatan.show') }}">Catatan</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('materi.show') }}">Materi</a>
                                 </li>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button"
@@ -64,7 +76,7 @@
                                         <i class="fa-regular fa-circle-user fa-xl me-2"></i>{{ auth()->user()->nama }}
                                     </a>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                                        <li><a class="dropdown-item" href="{{ route('profile.show') }}">Profile</a></li>
                                         <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                                     </ul>
                                 </li>
@@ -75,7 +87,7 @@
                                 <a class="nav-link" href="{{ route('home_page') }}">HOME</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">PRODUCTS</a>
+                                <a class="nav-link" href="{{ route('register_page') }}">REGISTER</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link active" href="{{ route('login_page') }}">LOGIN</a>

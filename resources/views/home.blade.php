@@ -1,5 +1,10 @@
 @extends('layouts.master')
 @section('title', 'Home')
+@push('style')
+    <style>
+
+    </style>
+@endpush
 
 @section('content')
     <div class="container" style="margin-top: 10%">

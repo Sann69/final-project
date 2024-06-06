@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Request;
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,3 +33,16 @@ Route::get('/login/google/callback', [UserController::class, 'loginGoogleCallbac
 // Home
 Route::get('/', [UserController::class, 'home'])->name('home_page');
 
+// Profile
+Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.show');
+Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
+Route::post('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
+
+// bookmark
+Route::get('/bookmark', [UserController::class, 'showBookmark'])->name('bookmark.show');
+
+// catatan
+Route::get('/catatan', [UserController::class, 'showCatatan'])->name('catatan.show');
+
+// materi
+Route::get('/materi', [UserController::class, 'showMateri'])->name('materi.show');
