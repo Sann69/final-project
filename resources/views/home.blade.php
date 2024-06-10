@@ -18,7 +18,8 @@
             </div>
             <!-- Image Section -->
             <div class="col-md-4">
-                <img src="https://media.istockphoto.com/id/1497459613/id/vektor/platform-e-learning-dan-konsep-pendidikan-virtual-dengan-orang-yang-mengikuti-kelas-online.webp?b=1&s=612x612&w=0&k=20&c=iLwxNl-TTKBrT7UFvJqRgRQ1Yudmjycr7KLqM_lCu40=" alt="Pembelajaran Online" class="img-fluid" style="transform: scale(1.3); transform-origin: top left;">
+                <img src="https://media.istockphoto.com/id/1497459613/id/vektor/platform-e-learning-dan-konsep-pendidikan-virtual-dengan-orang-yang-mengikuti-kelas-online.webp?b=1&s=612x612&w=0&k=20&c=iLwxNl-TTKBrT7UFvJqRgRQ1Yudmjycr7KLqM_lCu40="
+                    alt="Pembelajaran Online" class="img-fluid" style="transform: scale(1.3); transform-origin: top left;">
             </div>
         </div>
     </div>
@@ -31,7 +32,8 @@
                     <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Ribuan Kursus">
                     <div class="card-body">
                         <h5 class="card-title fw-bold">Ribuan Kursus</h5>
-                        <p class="card-text">Akses ribuan kursus dari berbagai kategori, mulai dari teknologi hingga seni.</p>
+                        <p class="card-text">Akses ribuan kursus dari berbagai kategori, mulai dari teknologi hingga seni.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -64,7 +66,8 @@
                 <div class="card">
                     <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Testimonial Aulia">
                     <div class="card-body">
-                        <p class="card-text">"Belajar Bersama telah mengubah cara saya belajar. Saya bisa belajar kapan saja dan di mana saja!" - Aulia</p>
+                        <p class="card-text">"Belajar Bersama telah mengubah cara saya belajar. Saya bisa belajar kapan saja
+                            dan di mana saja!" - Aulia</p>
                     </div>
                 </div>
             </div>
@@ -72,7 +75,8 @@
                 <div class="card">
                     <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Testimonial Budi">
                     <div class="card-body">
-                        <p class="card-text">"Platform yang luar biasa dengan banyak kursus yang bermanfaat. Sangat direkomendasikan!" - Budi</p>
+                        <p class="card-text">"Platform yang luar biasa dengan banyak kursus yang bermanfaat. Sangat
+                            direkomendasikan!" - Budi</p>
                     </div>
                 </div>
             </div>
@@ -80,7 +84,8 @@
                 <div class="card">
                     <img src="https://via.placeholder.com/300x200" class="card-img-top" alt="Testimonial Chandra">
                     <div class="card-body">
-                        <p class="card-text">"Pengajarnya sangat profesional dan materinya mudah dipahami. Terima kasih Belajar Bersama!" - Chandra</p>
+                        <p class="card-text">"Pengajarnya sangat profesional dan materinya mudah dipahami. Terima kasih
+                            Belajar Bersama!" - Chandra</p>
                     </div>
                 </div>
             </div>

@@ -40,7 +40,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('login_page')
+            return redirect()->route('login.page')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -50,12 +50,12 @@ class UserController extends Controller
 
             $user = Auth::user();
             if ($user->hasRole('admin')) {
-                return redirect()->route('home_page', ['user' => $user->id]);
+                return redirect()->route('home.page', ['user' => $user->id]);
             } elseif ($user->hasRole('user')) {
-                return redirect()->route('home_page');
+                return redirect()->route('home.page');
             }
         } else {
-            return redirect()->route('login_page')
+            return redirect()->route('login.page')
                 ->with('error', 'Login failed, email or password is incorrect');
         }
     }
@@ -80,7 +80,7 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('register_page')
+            return redirect()->route('register.page')
                 ->withErrors($validator)
                 ->withInput();
         }
@@ -99,10 +99,10 @@ class UserController extends Controller
         $user->assignRole('user');
 
         if ($user) {
-            return redirect()->route('register_page')
+            return redirect()->route('register.page')
                 ->with('success', 'User created successfully');
         } else {
-            return redirect()->route('register_page')
+            return redirect()->route('register.page')
                 ->with('error', 'Failed to create user');
         }
     }
@@ -112,7 +112,7 @@ class UserController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('login_page');
+        return redirect()->route('login.page');
     }
 
     //login google
@@ -148,7 +148,7 @@ class UserController extends Controller
             Auth::login($newUser);
         }
 
-        return redirect()->route('home_page');
+        return redirect()->route('home.page');
     }
 
     //Show Profile
@@ -180,6 +180,12 @@ class UserController extends Controller
     public function showMateri()
     {
         return view('materi');
+    }
+
+     //tentang
+    public function showTentang()
+    {
+        return view('tentang');
     }
 
 }

@@ -16,7 +16,7 @@
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
-            <form action="{{ route('login_user') }}" method="POST">
+            <form action="{{ route('login.user') }}" method="POST">
                 @csrf
 
                 <div class="form-group mb-3">
@@ -37,7 +37,7 @@
                     @enderror
                 </div>
 
-                <p>Belum Punya Akun? <a href="{{ route('register_page') }}" class="text-dark fw-bold"> Daftar Sekarang</a>
+                <p>Belum Punya Akun? <a href="{{ route('register.page') }}" class="text-dark fw-bold"> Daftar Sekarang</a>
                 </p>
 
                 <div class="d-flex justify-content-center">
@@ -45,7 +45,7 @@
                 </div>
                 <p class="text-center my-1">Atau</p>
                 <div class="d-flex justify-content-center">
-                    <a href="{{ route('login_google') }}" class="w-50 btn btn-lg btn-info mt-2"> <i class="fab fa-google">
+                    <a href="{{ route('login.google') }}" class="w-50 btn btn-lg btn-info mt-2"> <i class="fab fa-google">
                         </i> Login Google</a>
                 </div>
             </form>

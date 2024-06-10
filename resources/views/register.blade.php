@@ -16,7 +16,7 @@
                 <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
-            <form action="{{ route('register_user') }}" method="POST">
+            <form action="{{ route('register.user') }}" method="POST">
                 @csrf
 
                 <div class="form-group mb-3">

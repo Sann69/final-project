@@ -18,20 +18,20 @@ use Illuminate\Support\Facades\Request;
 */
 
 // Login
-Route::get('/login', [UserController::class, 'login'])->name('login_page');
-Route::post('/login', [UserController::class, 'loginUser'])->name('login_user');
+Route::get('/login', [UserController::class, 'login'])->name('login.page');
+Route::post('/login', [UserController::class, 'loginUser'])->name('login.user');
 
 // Register
-Route::get('/register', [UserController::class, 'register'])->name('register_page');
-Route::post('/register-user', [UserController::class, 'registerUser'])->name('register_user');
+Route::get('/register', [UserController::class, 'register'])->name('register.page');
+Route::post('/register-user', [UserController::class, 'registerUser'])->name('register.user');
 Route::get('/logout', [UserController::class, 'logout'])->name('logout');
 
 // Socialite Google Login
-Route::get('/login/google', [UserController::class, 'loginGoogle'])->name('login_google');
-Route::get('/login/google/callback', [UserController::class, 'loginGoogleCallback'])->name('callback_google');
+Route::get('/login/google', [UserController::class, 'loginGoogle'])->name('login.google');
+Route::get('/login/google/callback', [UserController::class, 'loginGoogleCallback'])->name('callback.google');
 
 // Home
-Route::get('/', [UserController::class, 'home'])->name('home_page');
+Route::get('/', [UserController::class, 'home'])->name('home.page');
 
 // Profile
 Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.show');
@@ -46,3 +46,6 @@ Route::get('/catatan', [UserController::class, 'showCatatan'])->name('catatan.sh
 
 // materi
 Route::get('/materi', [UserController::class, 'showMateri'])->name('materi.show');
+
+//tentang
+Route::get('/tentang', [UserController::class, 'showTentang'])->name('tentang.page');
