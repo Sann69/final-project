@@ -21,7 +21,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid mx-4">
                 <a class="navbar-brand" href="{{ route('home.page') }}">
-                    <!--   <img src="https://amandemy.co.id/images/amandemy-logo.png" width="150">-->
+                    {{-- <img src="https://amandemy.co.id/images/amandemy-logo.png" width="150"> --}}
                     <strong style="color: blue; font-size: 1.5em;">Belajar Bersama</strong>
                 </a>
                 <div class="navbar">

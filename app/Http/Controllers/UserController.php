@@ -152,10 +152,15 @@ class UserController extends Controller
     }
 
     //Show Profile
-    public function showProfile()
+    public function showProfile(Request $request, User $user)
     {
-        $user = Auth::user();
-        return view('profile', compact('user'));
+        // $user = Auth::user();
+        // return view('profile', compact('user'));
+
+        $user = User::find($user->id);
+        // dd($user);
+        //return view('profile', ['user' => $user]);
+        return view('profile');
     }
 
     //Edit Profile
@@ -187,5 +192,12 @@ class UserController extends Controller
     {
         return view('tentang');
     }
+
+    // public function getProfile(Request $request, User $user)
+    // {
+    //     $user = User::with('summarize')->find($user->id);
+    //     // dd($user);
+    //     return view('profile', ['user' => $user]);
+    // }
 
 }
