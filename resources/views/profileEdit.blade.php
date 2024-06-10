@@ -13,11 +13,11 @@
             <label>Email</label>
             <input type="email" id="email" name="email" class="form-control" value="">
         </div>
-        <div class="col-mb-2">
+        <div class="col-mb-3">
             <label>Password Baru</label>
             <input type="password" id="password" name="password" class="form-control" value="">
         </div>
-        <div class="col-mb-2">
+        <div class="col-mb-3">
             <label>Confirmasi Password</label>
             <input type="password" id="password_confirmasi" name="password_confirmasi" class="form-control" value="">
         </div>
