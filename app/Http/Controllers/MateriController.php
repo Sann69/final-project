@@ -21,4 +21,13 @@ class MateriController extends Controller
         $materi = Materi::findOrFail($id); // Mengambil data materi berdasarkan ID
         return view('materi.detail', compact('materi')); // Menampilkan halaman detail materi dengan data materi yang dipilih
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        // Lakukan logika pencarian di sini, misalnya:
+        $materi = Materi::where('title', 'LIKE', "%$query%")->get();
+        
+        return view('materi.index', compact('materi'));
+    }
 }

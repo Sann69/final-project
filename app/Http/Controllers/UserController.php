@@ -193,6 +193,25 @@ class UserController extends Controller
         return view('tentang');
     }
 
+    // Upload file
+    public function showUploadForm()
+    {
+        return view('profile.upload');
+    }
+
+    // Method to handle file upload
+    public function uploadFile(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+        ]);
+
+        $fileName = time() . '_' . $request->file->getClientOriginalName();
+        $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+
+        return redirect()->route('profile.upload')->with('success', 'File uploaded successfully.');
+    }
+
     // public function getProfile(Request $request, User $user)
     // {
     //     $user = User::with('summarize')->find($user->id);

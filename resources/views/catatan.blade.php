@@ -3,7 +3,12 @@
 
 @section('content')
     <div class="container" style="margin-top: 10%">
-        <h1 class="mb-4">Catatan</h1>
+        <div class="d-flex justify-content-between align-items-center mb-5">
+        <h1 class="mb-0"><i class="fa-solid fa-note-sticky"></i> Catatan</h1>
+        <form action="{{ route('materi.search') }}" method="GET" class="d-flex">
+            <button type="submit" class="btn btn-light w-200">Search <i class="fa-solid fa-magnifying-glass"></i></button>
+        </form>
+    </div>
 
         <!-- Tambahkan tombol untuk membuat catatan baru -->
         <div class="mb-4">
