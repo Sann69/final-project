@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Request;
 
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,24 +37,24 @@ Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.sh
 Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
 Route::post('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
 
-// From Upload
+
+// Form Upload
 Route::get('/profile/upload', [UserController::class, 'showUploadForm'])->name('profile.upload');
 Route::post('/profile/upload', [UserController::class, 'uploadFile'])->name('profile.upload.submit');
 
-
-// bookmark
+// Bookmark
 Route::get('/bookmark', [UserController::class, 'showBookmark'])->name('bookmark.show');
 
-// catatan
+// Catatan
 Route::get('/catatan', [UserController::class, 'showCatatan'])->name('catatan.show');
 
-// materi
+// Materi
 Route::get('/materi', [UserController::class, 'showMateri'])->name('materi.show');
 
-//tentang
+// Tentang
 Route::get('/tentang', [UserController::class, 'showTentang'])->name('tentang.page');
 
-//search
+// Search
 Route::get('/materi/search', [UserController::class, 'search'])->name('materi.search');
 Route::get('/catatan/search', [UserController::class, 'search'])->name('catatan.search');
 Route::get('/bookmark/search', [UserController::class, 'search'])->name('bookmark.search');
