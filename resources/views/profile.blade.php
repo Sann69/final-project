@@ -24,10 +24,12 @@
                         <p class="fw-bold">Alamat</p>
                     </div>
                     <div>
-                        <p class=""></p>
-                        <p class=""></p>
-                        <p class=""></p>
-                        <p class=""></p>
+                        <p class="">{{ Auth::user()->nama }}</p>
+                        <p class="">{{ Auth::user()->email }}</p>
+                        <p class="">{{ Auth::user()->gender }}</p>
+                        <p class="">{{ Auth::user()->umur }}</p>
+                        <p class="">{{ Auth::user()->tgl_lahir }}</p>
+                        <p class="">{{ Auth::user()->alamat }}</p>
                     </div>
                 </div>
             </div>
