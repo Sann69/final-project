@@ -212,11 +212,32 @@ class UserController extends Controller
         return redirect()->route('profile.upload')->with('success', 'File uploaded successfully.');
     }
 
-    // public function getProfile(Request $request, User $user)
-    // {
-    //     $user = User::with('summarize')->find($user->id);
-    //     // dd($user);
-    //     return view('profile', ['user' => $user]);
-    // }
+    // UserController.php
+
+public function updateProfile(Request $request)
+{
+    $user = Auth::user();
+
+    // Validasi permintaan
+    $request->validate([
+        'nama' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        'password' => ['nullable', 'confirmed', 'min:8'],
+    ]);
+
+    // Perbarui informasi pengguna
+    $user->nama = $request->nama; // Ubah 'name' menjadi 'nama'
+    $user->email = $request->email;
+
+    // Perbarui password jika diberikan
+    if ($request->filled('password')) {
+        $user->password = Hash::make($request->password);
+    }
+
+    $user->save();
+
+    // Redirect kembali dengan pesan sukses
+    return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
+}
 
 }
