@@ -33,7 +33,7 @@
                                     <a class="nav-link" href="{{ route('home.page') }}">HOME</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('admin.page') }}">DATA USER</a>
+                                    <a class="nav-link" href="{{ route('admin.page') }}">MANAGE USER</a>
                                 </li>
                                 {{-- <li class="nav-item">
                                     <a class="nav-link"

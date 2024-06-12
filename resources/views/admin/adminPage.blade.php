@@ -24,15 +24,12 @@
         <div class="row bg-info rounded px-3 py-3 w-100">
             <div class="d-flex justify-content-between">
                 <h2 class="fw-semibold">Data User</h2>
-
             </div>
-
-
 
             <div class="d-flex justify-content-end">
                 <select id="genderFilter" class="form-select w-25 my-3" aria-label="Default select example">
                     <option selected value="">Pilih Gender</option>
-                    <option value="Laki">Laki Laki</option> <!-- Ubah nilai value agar sesuai dengan nilai di tabel -->
+                    <option value="Laki">Laki Laki</option>
                     <option value="Perempuan">Perempuan</option>
                 </select>
             </div>
@@ -58,7 +55,6 @@
                             <td>{{ $user->id }}</td>
                             <td class="text-center">{{ $user->nama }}</td>
                             <td class="text-center">{{ $user->email }}</td>
-                            {{-- <td class="text-center">{{ $user->gender }}</td> --}}
                             @if ($user->gender == 'male')
                                 <td class="text-center">Laki Laki</td>
                             @else
@@ -68,11 +64,11 @@
                             <td class="text-center">{{ $user->tgl_lahir }}</td>
                             <td class="text-center">{{ $user->alamat }}</td>
                             <td class="d-flex">
-                                <a href="{{ route('home.page') }}" class="btn btn-warning btn-md">Update</a>
-                                <form action="{{ route('home.page') }}" method="POST" class="ms-1">
-                                    @csrf
-                                    <button class="btn btn-md btn-danger" type="submit">Delete</button>
-                                </form>
+                                <a href="{{ route('edit.user.admin', ['user' => $user->id]) }}"
+                                    class="btn btn-warning btn-md">Update</a>
+                                <button class="btn btn-md btn-danger ms-1" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal" data-user-id="{{ $user->id }}"
+                                    data-user-name="{{ $user->nama }}">Delete</button>
                             </td>
                         </tr>
                     @endforeach
@@ -81,15 +77,50 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirm Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete <span id="userName"></span>?
+                </div>
+                <div class="modal-footer">
+                    <form id="deleteForm" action="" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
             var table = $('#datatable-list').DataTable();
 
             $('#genderFilter').on('change', function() {
                 var gender = $(this).val();
-                table.column(4).search(gender).draw(); // Ensure this is the correct column index for gender
+                table.column(4).search(gender).draw();
+            });
+
+            $('#deleteModal').on('show.bs.modal', function(event) {
+                var button = $(event.relatedTarget);
+                var userId = button.data('user-id');
+                var userName = button.data('user-name');
+
+                var modal = $(this);
+                modal.find('#userName').text(userName);
+                modal.find('#deleteForm').attr('action', '/delete/' + userId);
             });
         });
     </script>

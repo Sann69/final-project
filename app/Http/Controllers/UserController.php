@@ -214,37 +214,74 @@ class UserController extends Controller
 
     // UserController.php
 
-public function updateProfile(Request $request)
-{
-    $user = Auth::user();
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
 
-    // Validasi permintaan
-    $request->validate([
-        'nama' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-        'password' => ['nullable', 'confirmed', 'min:8'],
-    ]);
+        // Validasi permintaan
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'password' => ['nullable', 'confirmed', 'min:8'],
+        ]);
 
-    // Perbarui informasi pengguna
-    $user->nama = $request->nama; // Ubah 'name' menjadi 'nama'
-    $user->email = $request->email;
+        // Perbarui informasi pengguna
+        $user->nama = $request->nama; // Ubah 'name' menjadi 'nama'
+        $user->email = $request->email;
 
-    // Perbarui password jika diberikan
-    if ($request->filled('password')) {
-        $user->password = Hash::make($request->password);
+        // Perbarui password jika diberikan
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
     }
 
-    $user->save();
+    //halaman admin
+    public function getAdmin()
+    {
+        $users = User::all();
+        return view('admin.adminPage', ['users' => $users]);
+    }
 
-    // Redirect kembali dengan pesan sukses
-    return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
-}
+    //form edit user pada halaman admin
+    public function editUserAdmin(User $user)
+        {
+            return view('admin.editUserAdmin', ['user' => $user]);
+        }
 
+    //proses edit user pada halaman admin
+    public function updateUserAdmin(Request $request, User $user)
+    {
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+            'gender' => 'required|in:male,female',
+            'umur' => 'required|integer|min:0',
+            'tgl_lahir' => 'required|date',
+            'alamat' => 'required|string|max:500',
+        ]);
 
-public function getAdmin()
-{
-    $users = User::all();
-    return view('adminPage', ['users' => $users]);
-}
+        $user->update([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'gender' => $request->gender,
+            'umur' => $request->umur,
+            'tgl_lahir' => $request->tgl_lahir,
+            'alamat' => $request->alamat,
+        ]);
+
+        return redirect()->route('edit.user.admin', $user->id)->with('success', 'User updated successfully');
+    }
+
+    //fungsi delete user pada halaman admin
+    public function deleteUserAdmin(User $user)
+    {
+        $user->delete();
+        return redirect()->route('admin.page')->with('success', 'User deleted successfully');
+    }
 
 }

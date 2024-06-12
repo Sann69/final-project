@@ -62,3 +62,6 @@ Route::get('/bookmark/search', [UserController::class, 'search'])->name('bookmar
 //admin
 //Route::get('/admin/{user}', [UserController::class, 'getAdmin'])->name('admin.page')->middleware('authenticate');
 Route::get('/admin', [UserController::class, 'getAdmin'])->name('admin.page')->middleware(['auth', 'role:admin']);
+Route::get('/edit/{user}', [UserController::class, 'editUserAdmin'])->name('edit.user.admin');
+Route::put('/edit/{user}', [UserController::class, 'updateUserAdmin'])->name('update.user');
+Route::delete('/delete/{user}', [UserController::class, 'deleteUserAdmin'])->name('delete.user');
