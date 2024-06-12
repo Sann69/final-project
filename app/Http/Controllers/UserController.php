@@ -254,28 +254,56 @@ class UserController extends Controller
         }
 
     //proses edit user pada halaman admin
+    // public function updateUserAdmin(Request $request, User $user)
+    // {
+    //     $request->validate([
+    //         'nama' => 'required|string|max:255',
+    //         'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+    //         'gender' => 'required|in:male,female',
+    //         'umur' => 'required|integer|min:0',
+    //         'tgl_lahir' => 'required|date',
+    //         'alamat' => 'required|string|max:500',
+    //     ]);
+
+    //     $user->update([
+    //         'nama' => $request->nama,
+    //         'email' => $request->email,
+    //         'gender' => $request->gender,
+    //         'umur' => $request->umur,
+    //         'tgl_lahir' => $request->tgl_lahir,
+    //         'alamat' => $request->alamat,
+    //     ]);
+
+    //     return redirect()->route('edit.user.admin', $user->id)->with('success', 'User updated successfully');
+    // }
+
     public function updateUserAdmin(Request $request, User $user)
-    {
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-            'gender' => 'required|in:male,female',
-            'umur' => 'required|integer|min:0',
-            'tgl_lahir' => 'required|date',
-            'alamat' => 'required|string|max:500',
-        ]);
+{
+    $request->validate([
+        'nama' => 'required|string|max:255',
+        'email' => 'required|email|max:255|unique:users,email,' . $user->id,
+        'gender' => 'required|in:male,female',
+        'umur' => 'required|integer|min:0',
+        'tgl_lahir' => 'required|date',
+        'alamat' => 'required|string|max:500',
+        'role' => 'required|string|in:admin,user',
+    ]);
 
-        $user->update([
-            'nama' => $request->nama,
-            'email' => $request->email,
-            'gender' => $request->gender,
-            'umur' => $request->umur,
-            'tgl_lahir' => $request->tgl_lahir,
-            'alamat' => $request->alamat,
-        ]);
+    $user->update([
+        'nama' => $request->nama,
+        'email' => $request->email,
+        'gender' => $request->gender,
+        'umur' => $request->umur,
+        'tgl_lahir' => $request->tgl_lahir,
+        'alamat' => $request->alamat,
+    ]);
 
-        return redirect()->route('edit.user.admin', $user->id)->with('success', 'User updated successfully');
-    }
+    // Update role
+    $user->syncRoles($request->role);
+
+    return redirect()->route('update.user', $user->id)->with('success', 'User updated successfully');
+}
+
 
     //fungsi delete user pada halaman admin
     public function deleteUserAdmin(User $user)

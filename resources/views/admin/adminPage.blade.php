@@ -22,16 +22,24 @@
 @section('content')
     <div class="container mt-lg-4 mb-lg-3">
         <div class="row bg-info rounded px-3 py-3 w-100">
-            <div class="d-flex justify-content-between">
-                <h2 class="fw-semibold">Data User</h2>
-            </div>
-
-            <div class="d-flex justify-content-end">
-                <select id="genderFilter" class="form-select w-25 my-3" aria-label="Default select example">
-                    <option selected value="">Pilih Gender</option>
-                    <option value="Laki">Laki Laki</option>
-                    <option value="Perempuan">Perempuan</option>
-                </select>
+            <h2 class="fw-semibold">Data User</h2>
+            <div class="d-flex justify-content-end align-items-center w-100 my-3">
+                <div class="d-flex">
+                    <div class="me-3">
+                        <select id="genderFilter" class="form-select" aria-label="Filter Gender">
+                            <option selected value="">Pilih Gender</option>
+                            <option value="Laki">Laki Laki</option>
+                            <option value="Perempuan">Perempuan</option>
+                        </select>
+                    </div>
+                    <div>
+                        <select id="roleFilter" class="form-select" aria-label="Filter Role">
+                            <option selected value="">Pilih Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <table class="table table-striped w-100 mt-3" id="datatable-list">
@@ -44,6 +52,7 @@
                         <th scope="col" class="text-center">Gender</th>
                         <th scope="col" class="text-center">Umur</th>
                         <th scope="col" class="text-center">Tanggal Lahir</th>
+                        <th scope="col" class="text-center">Role</th>
                         <th scope="col" class="text-center">Alamat</th>
                         <th scope="col" class="text-center" style="width: 150px">Action</th>
                     </tr>
@@ -62,6 +71,7 @@
                             @endif
                             <td class="text-center">{{ $user->umur }}</td>
                             <td class="text-center">{{ $user->tgl_lahir }}</td>
+                            <td class="text-center">{{ $user->roles->pluck('name')->implode(', ') }}</td>
                             <td class="text-center">{{ $user->alamat }}</td>
                             <td class="d-flex">
                                 <a href="{{ route('edit.user.admin', ['user' => $user->id]) }}"
@@ -103,7 +113,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
     <script>
         $(document).ready(function() {
             var table = $('#datatable-list').DataTable();
@@ -122,6 +131,12 @@
                 modal.find('#userName').text(userName);
                 modal.find('#deleteForm').attr('action', '/delete/' + userId);
             });
+
+            $('#roleFilter').on('change', function() {
+                var role = $(this).val();
+                table.column(7).search(role).draw();
+            });
+
         });
     </script>
 @endsection

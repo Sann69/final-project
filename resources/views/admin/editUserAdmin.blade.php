@@ -21,6 +21,18 @@
                 @csrf
 
                 <div class="form-group mb-3">
+                    <label for="">Role</label>
+                    <select name="role" class="form-select" required>
+                        <option value="">Pilih Role</option>
+                        <option value="admin" {{ $user->roles->first()->name == 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="user" {{ $user->roles->first()->name == 'user' ? 'selected' : '' }}>User</option>
+                    </select>
+                    @error('role')
+                        <div class="text-danger mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group mb-3">
                     <label for="nama">Nama Lengkap</label>
                     <input type="text" name="nama" id="nama" class="form-control"
                         placeholder="Masukan Nama Lengkap Kamu" value="{{ $user->nama }}" required>
