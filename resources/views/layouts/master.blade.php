@@ -21,8 +21,8 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid mx-4">
                 <a class="navbar-brand" href="{{ route('home.page') }}">
-                    {{-- <img src="https://amandemy.co.id/images/amandemy-logo.png" width="150"> --}}
-                    <strong style="color: blue; font-size: 1.5em;">Belajar Bersama</strong>
+                    <img src="{{ asset('img/logo.png') }}" width="70">
+                    {{-- <strong style="color: blue; font-size: 1.5em;">Belajar Bersama</strong> --}}
                 </a>
                 <div class="navbar">
                     <ul class="nav nav-pills justify-content-end fw-bold">
@@ -33,17 +33,11 @@
                                     <a class="nav-link" href="{{ route('home.page') }}">HOME</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('bookmark.show') }}">Bookmark</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('catatan.show') }}">Catatan</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('materi.show') }}">Materi</a>
+                                    <a class="nav-link" href="{{ route('admin.page') }}">DATA USER</a>
                                 </li>
                                 {{-- <li class="nav-item">
                                     <a class="nav-link"
-                                        href="{{ route('home.page', ['user' => auth()->user()->id]) }}">MANAGE PRODUCTS</a>
+                                        href="{{ route('home.page', ['user' => auth()->user()->id]) }}">MANAGE</a>
                                 </li> --}}
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" role="button"

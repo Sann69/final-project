@@ -58,3 +58,7 @@ Route::get('/tentang', [UserController::class, 'showTentang'])->name('tentang.pa
 Route::get('/materi/search', [UserController::class, 'search'])->name('materi.search');
 Route::get('/catatan/search', [UserController::class, 'search'])->name('catatan.search');
 Route::get('/bookmark/search', [UserController::class, 'search'])->name('bookmark.search');
+
+//admin
+//Route::get('/admin/{user}', [UserController::class, 'getAdmin'])->name('admin.page')->middleware('authenticate');
+Route::get('/admin', [UserController::class, 'getAdmin'])->name('admin.page')->middleware(['auth', 'role:admin']);

@@ -240,4 +240,11 @@ public function updateProfile(Request $request)
     return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
 }
 
+
+public function getAdmin()
+{
+    $users = User::all();
+    return view('adminPage', ['users' => $users]);
+}
+
 }
