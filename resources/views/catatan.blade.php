@@ -2,23 +2,50 @@
 @section('title', 'Catatan')
 
 @section('content')
-    <div class="container" style="margin-top: 10%">
-        <div class="d-flex justify-content-between align-items-center mb-5">
-        <h1 class="mb-0"><i class="fa-solid fa-note-sticky"></i> Catatan</h1>
-        <form action="{{ route('materi.search') }}" method="GET" class="d-flex">
-            <button type="submit" class="btn btn-light w-200">Search <i class="fa-solid fa-magnifying-glass"></i></button>
+<div class="container" style="margin-top: 10%">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="mb-2"><i class="fa-solid fa-book-open"></i> Catatan</h1>
+        <form action="{{ route('catatan.search') }}" method="GET" class="d-flex">
+            <input type="text" name="cari" class="form-control me-2" placeholder="Search">
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
     </div>
+
+    @if(isset($catatan) && $catatan->count())
+            <ul class="list-group mb-4">
+                @foreach($catatan as $catatanItem)
+                    <li class="list-group-item">{{ $catatanItem->nama_catatan }}</li>
+                @endforeach
+            </ul>
+            <div class="mt-2">
+                {{ $catatan->links() }}
+            </div>
+        @else
+            <p class="text-muted">Tidak ada catatan ditemukan</p>
+        @endif
 
         <!-- Tambahkan tombol untuk membuat catatan baru -->
         <div class="mb-4">
             <a href="#" class="btn btn-success">Buat Catatan Baru</a>
         </div>
+        <form action="{{ route('catatan.baru') }}" method="post">
+            @csrf
+            <div class="mb-3">
+                <label for="judul" class="form-label">Judul:</label>
+                <input type="text" class="form-control" id="judul" name="judul" required>
+            </div>
+            <div class="mb-3">
+                <label for="deskripsi" class="form-label">Deskripsi:</label>
+                <textarea class="form-control" id="deskripsi" name="deskripsi" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary float-end">Simpan</button>
+        </form>
 
-        <div class="row">
+    <div class="row">
             <!-- Contoh Catatan 1 -->
+        <div class="row">
             <div class="col-md-4 mb-4">
-                <div class="card">
+                <div class="card"> 
                     <div class="card-body">
                         <h5 class="card-title">Judul Catatan 1</h5>
                         <p class="card-text">Isi singkat dari catatan 1. Ini adalah ringkasan atau potongan kecil dari catatan lengkap.</p>
@@ -54,8 +81,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Tambahkan lebih banyak catatan sesuai kebutuhan -->
         </div>
     </div>
 @endsection

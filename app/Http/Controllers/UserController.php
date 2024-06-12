@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -310,6 +311,39 @@ class UserController extends Controller
     {
         $user->delete();
         return redirect()->route('admin.page')->with('success', 'User deleted successfully');
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        // Lakukan logika pencarian di sini, misalnya:
+        $materi = Materi::where('title', 'LIKE', "%$query%")->get();
+        
+        return view('materi.index', compact('materi'));
+    }
+
+    public function create()
+    {
+        return view('catatan.create');
+    }
+
+    // Buat Catatan Baru
+    public function store(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'judul' => 'required',
+            'konten' => 'required',
+        ]);
+
+        // Simpan catatan baru ke database
+        Catatan::create([
+            'judul' => $request->judul,
+            'konten' => $request->konten,
+        ]);
+
+        // Redirect ke halaman index atau halaman detail catatan
+        return redirect()->route('catatan.index')->with('success', 'Catatan berhasil dibuat.');
     }
 
 }

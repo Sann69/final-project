@@ -50,6 +50,7 @@ Route::get('/catatan', [UserController::class, 'showCatatan'])->name('catatan.sh
 
 // Materi
 Route::get('/materi', [UserController::class, 'showMateri'])->name('materi.show');
+Route::get('/materi/search', [UserController::class, 'search'])->name('materi.search');
 
 // Tentang
 Route::get('/tentang', [UserController::class, 'showTentang'])->name('tentang.page');
@@ -65,3 +66,7 @@ Route::get('/admin', [UserController::class, 'getAdmin'])->name('admin.page')->m
 Route::get('/edit/{user}', [UserController::class, 'editUserAdmin'])->name('edit.user.admin');
 Route::put('/edit/{user}', [UserController::class, 'updateUserAdmin'])->name('update.user');
 Route::delete('/delete/{user}', [UserController::class, 'deleteUserAdmin'])->name('delete.user');
+
+Route::get('/catatan/baru', [UserController::class, 'baru'])->name('catatan.baru');
+
+

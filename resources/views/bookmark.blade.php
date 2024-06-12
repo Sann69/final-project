@@ -4,12 +4,27 @@
 
 @section('content')
     <div class="container" style="margin-top: 10%">
-        <div class="d-flex justify-content-between align-items-center mb-5">
-            <h1 class="mb-0"><i class="fa-solid fa-book"></i> Bookmark</h1>
-            <form action="{{ route('materi.search') }}" method="GET" class="d-flex">
-                <button type="submit" class="btn btn-light w-200">Search <i class="fa-solid fa-magnifying-glass"></i></button>
+       <div class="d-flex justify-content-between align-items-center mb-4">
+           <h1 class="mb-2"><i class="fa-solid fa-book-open"></i> Bookmark</h1>
+            <form action="{{ route('bookmark.search') }}" method="GET" class="d-flex">
+               <input type="text" name="cari" class="form-control me-2" placeholder="Search">
+               <button type="submit" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
-        </div>
+       </div>
+    </div>
+
+    @if(isset($bookmark) && $bookmark->count())
+            <ul class="list-group mb-4">
+                @foreach($bookmark as $bookmarkItem)
+                    <li class="list-group-item">{{ $bookmarkItem->nama_bookmark }}</li>
+                @endforeach
+            </ul>
+            <div class="mt-2">
+                {{ $bookmark->links() }}
+            </div>
+        @else
+            <p class="text-muted">Tidak ada bookmark ditemukan</p>
+        @endif
 
         <!-- Contoh data bookmark statis -->
         <div class="row">
