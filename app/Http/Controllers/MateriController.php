@@ -1,24 +1,40 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
-
-// Materi Controller
-
-use App\Models\Materi; // Import model Materi
+use App\Models\Materi;
 
 class MateriController extends Controller
 {
-    // Menampilkan daftar materi
-    public function index(Request $request)
+    public function create()
     {
-        $materi = Materi::all(); // Mengambil semua data materi dari database
-        return view('materi.index', compact('materi')); // Menampilkan halaman daftar materi dengan data materi
+        return view('materi.create');
     }
 
-    // Menampilkan detail materi
-    public function show($id)
+    public function store(Request $request)
     {
-        $materi = Materi::findOrFail($id); // Mengambil data materi berdasarkan ID
-        return view('materi.detail', compact('materi')); // Menampilkan halaman detail materi dengan data materi yang dipilih
+        // Validasi input
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'file' => 'required|file|mimes:pdf,doc,docx',
+            'author' => 'required|string|max:255',
+        ]);
+
+        // Upload file
+        $file = $request->file('file');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $filePath = $file->storeAs('uploads', $fileName);
+
+        // Simpan data ke database
+        $materi = new Materi();
+        $materi->judul = $request->judul;
+        $materi->deskripsi = $request->deskripsi;
+        $materi->file = $filePath; // simpan path file yang diupload
+        $materi->author = $request->author;
+        $materi->save();
+
+        return redirect()->route('materi.create')->with('success', 'Materi berhasil ditambahkan!');
     }
 }
