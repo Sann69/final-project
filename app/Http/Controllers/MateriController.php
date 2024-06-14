@@ -7,6 +7,9 @@ use App\Models\Materi;
 
 class MateriController extends Controller
 {
+
+    
+
     public function create()
     {
         return view('materi.create');
@@ -37,4 +40,6 @@ class MateriController extends Controller
 
         return redirect()->route('materi.create')->with('success', 'Materi berhasil ditambahkan!');
     }
+
+    
 }

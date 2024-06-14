@@ -30,5 +30,8 @@
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+        
+        <!-- Tombol Kembali ke Materi -->
+        <a href="{{ route('materi.show') }}" class="btn btn-secondary mt-3"><i class="fa-solid fa-arrow-left"></i> Kembali ke Materi</a>
     </div>
 @endsection

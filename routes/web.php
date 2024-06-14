@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Request;
 
 use App\Http\Controllers\MateriController;
 
+
 Route::get('/materi/create', [MateriController::class, 'create'])->name('materi.create');
 Route::post('/materi', [MateriController::class, 'store'])->name('materi.store');
 
