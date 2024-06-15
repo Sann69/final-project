@@ -42,6 +42,8 @@ Route::get('/', [UserController::class, 'home'])->name('home.page');
 Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.show');
 Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
 Route::post('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
+Route::get('/home', [UserController::class, 'index'])->name('home');
+
 
 
 // Form Upload

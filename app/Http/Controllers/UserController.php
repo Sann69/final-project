@@ -346,4 +346,9 @@ class UserController extends Controller
         return redirect()->route('catatan.index')->with('success', 'Catatan berhasil dibuat.');
     }
 
+    // profile ke home
+    public function index()
+    {
+        return view('home');
+    }
 }
