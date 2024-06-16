@@ -1,15 +1,12 @@
 <?php
 
+use App\Http\Controllers\CatatanController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Request;
-
 use App\Http\Controllers\MateriController;
-
-
-Route::get('/materi/create', [MateriController::class, 'create'])->name('materi.create');
-Route::post('/materi', [MateriController::class, 'store'])->name('materi.store');
+use App\Http\Controllers\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,34 +36,30 @@ Route::get('/login/google/callback', [UserController::class, 'loginGoogleCallbac
 Route::get('/', [UserController::class, 'home'])->name('home.page');
 
 // Profile
-Route::get('/profile', [UserController::class, 'showProfile'])->name('profile.show');
-Route::get('/profile/edit', [UserController::class, 'editProfile'])->name('profile.edit');
-Route::post('/profile/update', [UserController::class, 'updateProfile'])->name('profile.update');
-Route::get('/home', [UserController::class, 'index'])->name('home');
+Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile.show');
+Route::get('/profile/edit', [ProfileController::class, 'editProfile'])->name('profile.edit');
+Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+//Route::get('/home', [ProfileController::class, 'index'])->name('home');
 
-
-
-// Form Upload
-Route::get('/profile/upload', [UserController::class, 'showUploadForm'])->name('profile.upload');
-Route::post('/profile/upload', [UserController::class, 'uploadFile'])->name('profile.upload.submit');
 
 // Bookmark
 Route::get('/bookmark', [UserController::class, 'showBookmark'])->name('bookmark.show');
 
 // Catatan
-Route::get('/catatan', [UserController::class, 'showCatatan'])->name('catatan.show');
+Route::get('/catatan', [CatatanController::class, 'showCatatan'])->name('catatan.show');
+Route::get('/catatan/create', [CatatanController::class, 'createCatatan'])->name('catatan.create');
+Route::get('/catatan/store', [CatatanController::class, 'storeCatatan'])->name('catatan.store');
 
 // Materi
-Route::get('/materi', [UserController::class, 'showMateri'])->name('materi.show');
-Route::get('/materi/search', [UserController::class, 'search'])->name('materi.search');
+Route::get('/materi', [MateriController::class, 'showMateri'])->name('materi.show');
+Route::get('/materi/search', [MateriController::class, 'search'])->name('materi.search');
+
+Route::get('/materi/create', [MateriController::class, 'create'])->name('materi.create');
+Route::post('/materi', [MateriController::class, 'store'])->name('materi.store');
 
 // Tentang
 Route::get('/tentang', [UserController::class, 'showTentang'])->name('tentang.page');
 
-// Search
-Route::get('/materi/search', [UserController::class, 'search'])->name('materi.search');
-Route::get('/catatan/search', [UserController::class, 'search'])->name('catatan.search');
-Route::get('/bookmark/search', [UserController::class, 'search'])->name('bookmark.search');
 
 //admin
 //Route::get('/admin/{user}', [UserController::class, 'getAdmin'])->name('admin.page')->middleware('authenticate');
@@ -75,6 +68,5 @@ Route::get('/edit/{user}', [UserController::class, 'editUserAdmin'])->name('edit
 Route::put('/edit/{user}', [UserController::class, 'updateUserAdmin'])->name('update.user');
 Route::delete('/delete/{user}', [UserController::class, 'deleteUserAdmin'])->name('delete.user');
 
-Route::get('/catatan/baru', [UserController::class, 'baru'])->name('catatan.baru');
 
 

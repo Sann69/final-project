@@ -17,9 +17,9 @@
         </form>
 
         <!-- Daftar Materi -->
-        @if(isset($materi) && $materi->count())
+        @if (isset($materi) && $materi->count())
             <ul class="list-group mb-4">
-                @foreach($materi as $materiItem)
+                @foreach ($materi as $materiItem)
                     <li class="list-group-item">{{ $materiItem->nama_materi }}</li>
                 @endforeach
             </ul>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Materi;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -152,93 +153,16 @@ class UserController extends Controller
         return redirect()->route('home.page');
     }
 
-    //Show Profile
-    public function showProfile(Request $request, User $user)
-    {
-        // $user = Auth::user();
-        // return view('profile', compact('user'));
-
-        $user = User::find($user->id);
-        // dd($user);
-        //return view('profile', ['user' => $user]);
-        return view('profile');
-    }
-
-    //Edit Profile
-    public function editProfile()
-    {
-        return view('profileEdit');
-    }
-
     // bookmark
     public function showBookmark()
     {
         return view('bookmark');
     }
 
-    //catatan
-    public function showCatatan()
-    {
-        return view('catatan');
-    }
-
-    //materi
-    public function showMateri()
-    {
-        return view('materi');
-    }
-
      //tentang
     public function showTentang()
     {
         return view('tentang');
-    }
-
-    // Upload file
-    public function showUploadForm()
-    {
-        return view('profile.upload');
-    }
-
-    // Method to handle file upload
-    public function uploadFile(Request $request)
-    {
-        $request->validate([
-            'file' => 'required|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
-        ]);
-
-        $fileName = time() . '_' . $request->file->getClientOriginalName();
-        $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
-
-        return redirect()->route('profile.upload')->with('success', 'File uploaded successfully.');
-    }
-
-    // UserController.php
-
-    public function updateProfile(Request $request)
-    {
-        $user = Auth::user();
-
-        // Validasi permintaan
-        $request->validate([
-            'nama' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => ['nullable', 'confirmed', 'min:8'],
-        ]);
-
-        // Perbarui informasi pengguna
-        $user->nama = $request->nama; // Ubah 'name' menjadi 'nama'
-        $user->email = $request->email;
-
-        // Perbarui password jika diberikan
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
-
-        $user->save();
-
-        // Redirect kembali dengan pesan sukses
-        return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
     }
 
     //halaman admin
@@ -305,7 +229,6 @@ class UserController extends Controller
     return redirect()->route('update.user', $user->id)->with('success', 'User updated successfully');
 }
 
-
     //fungsi delete user pada halaman admin
     public function deleteUserAdmin(User $user)
     {
@@ -313,42 +236,4 @@ class UserController extends Controller
         return redirect()->route('admin.page')->with('success', 'User deleted successfully');
     }
 
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-        // Lakukan logika pencarian di sini, misalnya:
-        $materi = Materi::where('title', 'LIKE', "%$query%")->get();
-        
-        return view('materi.index', compact('materi'));
-    }
-
-    public function create()
-    {
-        return view('catatan.create');
-    }
-
-    // Buat Catatan Baru
-    public function store(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'judul' => 'required',
-            'konten' => 'required',
-        ]);
-
-        // Simpan catatan baru ke database
-        Catatan::create([
-            'judul' => $request->judul,
-            'konten' => $request->konten,
-        ]);
-
-        // Redirect ke halaman index atau halaman detail catatan
-        return redirect()->route('catatan.index')->with('success', 'Catatan berhasil dibuat.');
-    }
-
-    // profile ke home
-    public function index()
-    {
-        return view('home');
-    }
 }

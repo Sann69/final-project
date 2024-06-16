@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Materi;
 use App\Models\User;
+use App\Models\Materi;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
@@ -13,31 +13,20 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Socialite\Facades\Socialite;
 
-class MateriController extends Controller
+class CatatanController extends Controller
 {
-
-    //materi
-    public function showMateri()
+     //catatan
+    public function showCatatan(User $user)
     {
-        return view('materi.materi');
+        return view('catatan.catatan' , ['user' => $user]);
     }
 
-    //search materi
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-        // Lakukan logika pencarian di sini, misalnya:
-        $materi = Materi::where('title', 'LIKE', "%$query%")->get();
-        
-        return view('materi.index', compact('materi'));
+     //form create catatan
+    public function createCatatan(User $user){
+        return view('catatan.create', ['user' => $user]);
     }
 
-    public function create()
-    {
-        return view('materi.create');
-    }
-
-    public function store(Request $request)
+    public function storeCatatan(Request $request)
     {
         // Validasi input
         $request->validate([
@@ -63,5 +52,4 @@ class MateriController extends Controller
         return redirect()->route('materi.create')->with('success', 'Materi berhasil ditambahkan!');
     }
 
-    
 }

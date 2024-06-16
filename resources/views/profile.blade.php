@@ -13,7 +13,8 @@
                             <i class="fas fa-user-circle fa-7x"></i>
                         @endif
                         <p class="mt-2 fw-bold">Profile</p>
-                        <a href="{{ route('home') }}" class="btn btn-link text-dark"><i class="fas fa-home"></i> Home</a>
+                        <a href="{{ route('home.page') }}" class="btn btn-link text-dark"><i class="fas fa-home"></i>
+                            Home</a>
                     </div>
                 </div>
             </div>
@@ -38,7 +39,7 @@
                 </div>
             </div>
         </div>
-    
+
 
         <div class="d-flex justify-content-center">
             <a href="{{ route('profile.edit') }}" class="btn btn-md btn-primary mt-3 w-25">Edit Profile</a>

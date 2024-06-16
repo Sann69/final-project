@@ -3,18 +3,38 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Materi;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Laravel\Socialite\Facades\Socialite;
 
 class ProfileController extends Controller
 {
-    public function edit()
+    //Show Profile
+    public function showProfile(Request $request, User $user)
     {
-        return view('edit_profile');
+        // $user = Auth::user();
+        // return view('profile', compact('user'));
+
+        $user = User::find($user->id);
+        // dd($user);
+        //return view('profile', ['user' => $user]);
+        return view('profile');
     }
 
-    public function update(Request $request)
+    //Edit Profile
+    public function editProfile()
+    {
+        return view('profileEdit');
+    }
+
+    //update profile
+    public function updateProfile(Request $request)
     {
         $user = Auth::user();
 
@@ -22,11 +42,11 @@ class ProfileController extends Controller
         $request->validate([
             'nama' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => ['nullable', 'confirmed', Password::min(8)],
+            'password' => ['nullable', 'confirmed', 'min:8'],
         ]);
 
         // Perbarui informasi pengguna
-        $user->name = $request->nama;
+        $user->nama = $request->nama; // Ubah 'name' menjadi 'nama'
         $user->email = $request->email;
 
         // Perbarui password jika diberikan
@@ -39,4 +59,5 @@ class ProfileController extends Controller
         // Redirect kembali dengan pesan sukses
         return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui.');
     }
+    
 }
