@@ -95,6 +95,7 @@ class UserController extends Controller
             'umur' => $request->umur,
             'tgl_lahir' => $request->tgl_lahir,
             'alamat' => $request->alamat,
+            'profile_picture' => 'images/profile.png',
         ]);
 
         // default role -> user (admin/user)

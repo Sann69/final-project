@@ -16,15 +16,21 @@ use Laravel\Socialite\Facades\Socialite;
 class ProfileController extends Controller
 {
     //Show Profile
-    public function showProfile(Request $request, User $user)
-    {
-        // $user = Auth::user();
-        // return view('profile', compact('user'));
+    // public function showProfile(Request $request, User $user)
+    // {
+    //     // $user = Auth::user();
+    //     // return view('profile', compact('user'));
 
-        $user = User::find($user->id);
-        // dd($user);
-        //return view('profile', ['user' => $user]);
-        return view('profile');
+    //     $user = User::find($user->id);
+    //     // dd($user);
+    //     //return view('profile', ['user' => $user]);
+    //     return view('profile');
+    // }
+
+    public function showProfile()
+    {
+        $user = Auth::user();
+        return view('profile', compact('user'));
     }
 
     //Edit Profile

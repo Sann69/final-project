@@ -20,9 +20,12 @@
                 @foreach ($catatan as $catatanItem)
                     <div class="col">
                         <div class="card h-100">
-
-                            {{-- <img src="" class="card-img-top"
-                                alt="{{ $catatanItem->judul }}"> --}}
+                            @if ($catatanItem->gambar)
+                                <img src="{{ Storage::url('gambar_files/' . $catatanItem->gambar) }}" class="card-img-top"
+                                    alt="{{ $catatanItem->judul }}">
+                            @else
+                                <img src="default_image.jpg" class="card-img-top" alt="Default Image">
+                            @endif
                             <div class="card-body">
                                 <h5 class="card-title">{{ $catatanItem->judul }}</h5>
                                 <p class="card-text">{{ Str::limit($catatanItem->deskripsi, 100) }}</p>

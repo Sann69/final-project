@@ -36,7 +36,7 @@ Route::get('/login/google/callback', [UserController::class, 'loginGoogleCallbac
 Route::get('/', [UserController::class, 'home'])->name('home.page');
 
 // Profile
-Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile.show');
+Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile.show')->middleware('auth');
 Route::get('/profile/edit', [ProfileController::class, 'editProfile'])->name('profile.edit');
 Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
 //Route::get('/home', [ProfileController::class, 'index'])->name('home');

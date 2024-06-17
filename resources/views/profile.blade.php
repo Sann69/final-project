@@ -1,5 +1,13 @@
-<!-- resources/views/profile/show.blade.php -->
 @extends('layouts.master')
+@push('style')
+    <style>
+        .fa-camera {
+            position: relative;
+            top: 25%;
+            left: -8.5%;
+        }
+    </style>
+@endpush
 
 @section('content')
     <div class="container mt-5 bg-info">
@@ -7,14 +15,11 @@
             <div class="col-md-5 offset-1 rounded my-lg-5 px-3 py-3 me-3" style="border: 3px solid black">
                 <div class="d-flex justify-content-between">
                     <div class="text-center w-100">
-                        @if (Auth::user()->photo)
-                            <i class="fas fa-user-circle fa-7x"></i>
-                        @else
-                            <i class="fas fa-user-circle fa-7x"></i>
-                        @endif
-                        <p class="mt-2 fw-bold">Profile</p>
-                        <a href="{{ route('home.page') }}" class="btn btn-link text-dark"><i class="fas fa-home"></i>
-                            Home</a>
+                        <img src="{{ Auth::user()->profile_picture }}" alt="Profile Picture" class="w-25 rounded-circle">
+                        <i class="fa fa-camera" aria-hidden="true"></i>
+
+                        <p class="mt-2 fw-bold">{{ Auth::user()->nama }}</p>
+
                     </div>
                 </div>
             </div>

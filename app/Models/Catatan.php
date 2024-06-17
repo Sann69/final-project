@@ -11,6 +11,6 @@ class Catatan extends Model
     protected $table = 'catatan'; // Sesuaikan dengan nama tabel di database
 
     protected $fillable = [
-        'judul', 'deskripsi', 'file' , 'user_id',
+        'judul', 'deskripsi', 'file' ,'gambar', 'user_id',
     ];
 }

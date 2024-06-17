@@ -35,29 +35,60 @@ class CatatanController extends Controller
         return view('catatan.create');
     }
 
+    // public function storeCatatan(Request $request)
+    // {
+    //     $request->validate([
+    //         'judul' => 'required|string|max:255',
+    //         'deskripsi' => 'required|string',
+    //         'file' => 'required|mimes:pdf,doc,docx,pptx,png,jpg,jpeg|max:10240', // Maksimum 10MB
+    //     ]);
+
+    //     // Simpan file di direktori storage/app/public/catatan_files
+    //     $filePath = $request->file('file')->store('public/catatan_files');
+
+    //     // Dapatkan nama file yang disimpan
+    //     $fileName = basename($filePath);
+
+    //     Catatan::create([
+    //         'judul' => $request->judul,
+    //         'deskripsi' => $request->deskripsi,
+    //         'file' => $fileName, // Simpan hanya nama file, bukan path lengkap
+    //         'user_id' => Auth::id(),
+    //     ]);
+
+    //     return redirect()->route('catatan.show')->with('success', 'Catatan berhasil ditambahkan!');
+    // }
+
     public function storeCatatan(Request $request)
-    {
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'file' => 'required|mimes:pdf,doc,docx,pptx,png,jpg,jpeg|max:10240', // Maksimum 10MB
-        ]);
+{
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'deskripsi' => 'required|string',
+        'file' => 'required|mimes:pdf,doc,docx,pptx,png,jpg,jpeg|max:10240', // Maksimum 10MB
+        'gambar' => 'nullable|mimes:png,jpg,jpeg|max:10240', // Maksimum 10MB
+    ]);
 
-        // Simpan file di direktori storage/app/public/catatan_files
-        $filePath = $request->file('file')->store('public/catatan_files');
+    // Simpan file catatan
+    $filePath = $request->file('file')->store('public/catatan_files');
+    $fileName = basename($filePath);
 
-        // Dapatkan nama file yang disimpan
-        $fileName = basename($filePath);
-
-        Catatan::create([
-            'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi,
-            'file' => $fileName, // Simpan hanya nama file, bukan path lengkap
-            'user_id' => Auth::id(),
-        ]);
-
-        return redirect()->route('catatan.show')->with('success', 'Catatan berhasil ditambahkan!');
+    // Simpan file gambar (jika ada)
+    $gambarName = null;
+    if ($request->hasFile('gambar')) {
+        $gambarPath = $request->file('gambar')->store('public/gambar_files');
+        $gambarName = basename($gambarPath);
     }
+
+    Catatan::create([
+        'judul' => $request->judul,
+        'deskripsi' => $request->deskripsi,
+        'file' => $fileName, // Simpan hanya nama file
+        'gambar' => $gambarName, // Simpan hanya nama file gambar (jika ada)
+        'user_id' => Auth::id(),
+    ]);
+
+    return redirect()->route('catatan.show')->with('success', 'Catatan berhasil ditambahkan!');
+}
 
     public function showDetail($id)
     {

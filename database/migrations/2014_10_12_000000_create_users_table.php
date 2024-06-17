@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->integer('umur');
             $table->date('tgl_lahir');
             $table->string('alamat');
+            $table->string('profile_picture')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

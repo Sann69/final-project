@@ -2,12 +2,14 @@
 @section('title', 'Materi')
 
 @section('content')
-    <div class="container" style="margin-top: 2%">
-        <div class="mb-4">
-            <h1><i class="fa-solid fa-book-open"></i> Materi</h1>
-            <a href="{{ route('materi.create') }}" class="btn btn-success"><i class="fa-solid fa-plus"></i> Add Materi</a>
-        </div>
 
+    <div class="container" style="margin-top: 2%">
+        @if (auth()->user()->hasRole('admin'))
+            <div class="mb-4">
+                <h1><i class="fa-solid fa-book-open"></i> Materi</h1>
+                <a href="{{ route('materi.create') }}" class="btn btn-success"><i class="fa-solid fa-plus"></i> Add Materi</a>
+            </div>
+        @endif
         <form action="{{ route('materi.search') }}" method="GET" class="mb-4 w-25">
             <div class="input-group">
                 <input type="text" name="query" class="form-control" placeholder="Search">
@@ -39,4 +41,5 @@
             <p class="text-muted">Tidak ada materi ditemukan</p>
         @endif
     </div>
+
 @endsection

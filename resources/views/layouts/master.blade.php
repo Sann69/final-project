@@ -21,7 +21,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid mx-4">
                 <a class="navbar-brand" href="{{ route('home.page') }}">
-                    <img src="{{ asset('img/logo.png') }}" width="70">
+                    <img src="{{ asset('images/logo.png') }}" width="70">
                     {{-- <strong style="color: blue; font-size: 1.5em;">Belajar Bersama</strong> --}}
                 </a>
                 <div class="navbar">
@@ -31,6 +31,9 @@
                                 <!-- Menu untuk admin -->
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('home.page') }}">HOME</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('materi.show') }}">MANAGE MATERI</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('admin.page') }}">MANAGE USER</a>
@@ -53,9 +56,6 @@
                                 <!-- Menu untuk user -->
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('home.page') }}">HOME</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('bookmark.show') }}">BOOKMARK</a>
                                 </li>
 
                                 <li class="nav-item dropdown">
