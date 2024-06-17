@@ -14,8 +14,8 @@ class CreateMaterisTable extends Migration
             $table->id();
             $table->string('judul');
             $table->text('deskripsi');
+            $table->string('gambar', 255);
             $table->string('file');
-            $table->string('author');
             $table->timestamps();
         });
     }

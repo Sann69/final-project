@@ -41,25 +41,26 @@ Route::get('/profile/edit', [ProfileController::class, 'editProfile'])->name('pr
 Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
 //Route::get('/home', [ProfileController::class, 'index'])->name('home');
 
-
 // Bookmark
 Route::get('/bookmark', [UserController::class, 'showBookmark'])->name('bookmark.show');
 
 // Catatan
 Route::get('/catatan', [CatatanController::class, 'showCatatan'])->name('catatan.show');
+Route::get('/catatan/my', [CatatanController::class, 'showCatatanSaya'])->name('catatanSaya.show');
 Route::get('/catatan/create', [CatatanController::class, 'createCatatan'])->name('catatan.create');
-Route::get('/catatan/store', [CatatanController::class, 'storeCatatan'])->name('catatan.store');
+Route::post('/catatan/store', [CatatanController::class, 'storeCatatan'])->name('catatan.store');
+Route::get('/catatan/search', [CatatanController::class, 'search'])->name('catatan.search');
+Route::get('/catatan/{id}/download', [CatatanController::class, 'download'])->name('catatan.download');
 
 // Materi
 Route::get('/materi', [MateriController::class, 'showMateri'])->name('materi.show');
 Route::get('/materi/search', [MateriController::class, 'search'])->name('materi.search');
-
 Route::get('/materi/create', [MateriController::class, 'create'])->name('materi.create');
 Route::post('/materi', [MateriController::class, 'store'])->name('materi.store');
+Route::get('/materi/download/{id}', [MateriController::class, 'download'])->name('materi.download');
 
 // Tentang
 Route::get('/tentang', [UserController::class, 'showTentang'])->name('tentang.page');
-
 
 //admin
 //Route::get('/admin/{user}', [UserController::class, 'getAdmin'])->name('admin.page')->middleware('authenticate');

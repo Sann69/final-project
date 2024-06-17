@@ -20,14 +20,14 @@
                 <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
             </div>
             <div class="mb-3">
-                <label for="file" class="form-label">File Catatan (PDF, DOC, DOCX)</label>
-                <input type="file" class="form-control" id="file" name="file" accept=".pdf,.doc,.docx" required>
+                <label for="file" class="form-label">File Catatan (PDF, DOC, DOCX, PPTX, PNG, JPG, JPEG)</label>
+                <input type="file" class="form-control" id="file" name="file"
+                    accept=".pdf,.doc,.docx,.pptx,.png,.jpg,.jpeg" required>
             </div>
-
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 
-        <!-- Tombol Kembali ke Materi -->
+        <!-- Tombol Kembali ke Catatan -->
         <a href="{{ route('catatan.show') }}" class="btn btn-secondary mt-3"><i class="fa-solid fa-arrow-left"></i> Kembali
             ke Catatan</a>
     </div>

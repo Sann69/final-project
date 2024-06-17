@@ -1,19 +1,16 @@
 <?php
 
-// app/Models/Materi.php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Materi extends Model
+class Catatan extends Model
 {
     use HasFactory;
+    protected $table = 'catatan'; // Sesuaikan dengan nama tabel di database
 
-    protected $table = 'materis';
     protected $fillable = [
-        'judul', 'deskripsi', 'file', 'gambar', 'user_id',
+        'judul', 'deskripsi', 'file' , 'user_id',
     ];
 }
-

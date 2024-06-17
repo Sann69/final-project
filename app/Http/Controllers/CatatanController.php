@@ -3,53 +3,78 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-use App\Models\Materi;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Laravel\Socialite\Facades\Socialite;
+use App\Models\Catatan;
 
 class CatatanController extends Controller
 {
-     //catatan
-    public function showCatatan(User $user)
+    public function showCatatan(Request $request)
     {
-        return view('catatan.catatan' , ['user' => $user]);
+        // Menggunakan paginate untuk membatasi jumlah catatan per halaman
+        $catatan = Catatan::paginate(9); // Sesuaikan jumlah paginasi sesuai kebutuhan
+        return view('catatan.catatan', compact('catatan'));
     }
 
-     //form create catatan
-    public function createCatatan(User $user){
-        return view('catatan.create', ['user' => $user]);
+    public function showCatatanSaya(Request $request)
+    {
+        // Menggunakan paginate untuk membatasi jumlah catatan per halaman
+        $catatan = Catatan::where('user_id', Auth::id())->paginate(9);
+        return view('catatan.catatan', compact('catatan'));
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $catatan = Catatan::where('judul', 'LIKE', "%$query%")->paginate(10); // Sesuaikan jumlah paginasi sesuai kebutuhan
+        return view('catatan.catatan', compact('catatan'));
+    }
+
+    public function createCatatan()
+    {
+        return view('catatan.create');
     }
 
     public function storeCatatan(Request $request)
     {
-        // Validasi input
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'file' => 'required|file|mimes:pdf,doc,docx',
-            'author' => 'required|string|max:255',
+            'file' => 'required|mimes:pdf,doc,docx,pptx,png,jpg,jpeg|max:10240', // Maksimum 10MB
         ]);
 
-        // Upload file
-        $file = $request->file('file');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $filePath = $file->storeAs('uploads', $fileName);
+        // Simpan file di direktori storage/app/public/catatan_files
+        $filePath = $request->file('file')->store('public/catatan_files');
 
-        // Simpan data ke database
-        $materi = new Materi();
-        $materi->judul = $request->judul;
-        $materi->deskripsi = $request->deskripsi;
-        $materi->file = $filePath; // simpan path file yang diupload
-        $materi->author = $request->author;
-        $materi->save();
+        // Dapatkan nama file yang disimpan
+        $fileName = basename($filePath);
 
-        return redirect()->route('materi.create')->with('success', 'Materi berhasil ditambahkan!');
+        Catatan::create([
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'file' => $fileName, // Simpan hanya nama file, bukan path lengkap
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect()->route('catatan.show')->with('success', 'Catatan berhasil ditambahkan!');
     }
 
+    public function showDetail($id)
+    {
+        // Hanya menampilkan detail catatan yang dimiliki oleh user yang sedang login
+        $catatan = Catatan::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        return view('catatan.detail', compact('catatan'));
+    }
+
+    public function download($id)
+{
+    $catatan = Catatan::findOrFail($id);
+    $filePath = storage_path('app/public/catatan_files/' . $catatan->file);
+
+    if (file_exists($filePath)) {
+        return response()->download($filePath);
+    } else {
+        return redirect()->back()->with('error', 'File tidak ditemukan.');
+    }
+}
 }

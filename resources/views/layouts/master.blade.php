@@ -57,9 +57,21 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('bookmark.show') }}">BOOKMARK</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('catatan.show') }}">CATATAN</a>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        CATATAN
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="{{ route('catatanSaya.show') }}">Catatan
+                                                Saya</a>
+                                        </li>
+                                        <li><a class="dropdown-item" href="{{ route('catatan.show') }}">Cari Catatan</a>
+                                        </li>
+                                    </ul>
                                 </li>
+
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('materi.show') }}">MATERI</a>
                                 </li>

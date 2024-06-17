@@ -4,33 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Materi;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Laravel\Socialite\Facades\Socialite;
 
 class MateriController extends Controller
 {
-
-    //materi
     public function showMateri()
-    {
-        return view('materi.materi');
-    }
+{
+    $materi = Materi::paginate(9); // Adjust the number as needed
+    return view('materi.materi', compact('materi'));
+}
 
-    //search materi
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-        // Lakukan logika pencarian di sini, misalnya:
-        $materi = Materi::where('title', 'LIKE', "%$query%")->get();
-        
-        return view('materi.index', compact('materi'));
-    }
+public function search(Request $request)
+{
+    $query = $request->input('query');
+    $materi = Materi::where('judul', 'LIKE', "%$query%")->paginate(9);
+    
+    return view('materi.materi', compact('materi'));
+}
 
     public function create()
     {
@@ -38,30 +28,50 @@ class MateriController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'file' => 'required|file|mimes:pdf,doc,docx',
-            'author' => 'required|string|max:255',
-        ]);
+{
+    // Validasi input
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'deskripsi' => 'required|string',
+        'file' => 'required|file|mimes:pdf,doc,docx',
+        'gambar' => 'required|string|max:255',
+    ]);
 
-        // Upload file
-        $file = $request->file('file');
-        $fileName = time() . '_' . $file->getClientOriginalName();
-        $filePath = $file->storeAs('uploads', $fileName);
+    // Upload file
+    $file = $request->file('file');
+    $fileName = time() . '_' . $file->getClientOriginalName();
+    $filePath = $file->storeAs('materi_files', $fileName);
 
-        // Simpan data ke database
-        $materi = new Materi();
-        $materi->judul = $request->judul;
-        $materi->deskripsi = $request->deskripsi;
-        $materi->file = $filePath; // simpan path file yang diupload
-        $materi->author = $request->author;
-        $materi->save();
+    // Simpan data ke database
+    $materi = new Materi();
+    $materi->judul = $request->judul;
+    $materi->deskripsi = $request->deskripsi;
+    $materi->file = $filePath;
+    $materi->gambar = $request->gambar;
+    $materi->user_id = $request->user()->id; // assuming the user is authenticated
+    $materi->save();
 
-        return redirect()->route('materi.create')->with('success', 'Materi berhasil ditambahkan!');
+    return redirect()->route('materi.create')->with('success', 'Materi berhasil ditambahkan!');
+}
+
+
+    public function detail($id)
+{
+    $materi = Materi::findOrFail($id);
+    return view('materi.detail', compact('materi'));
+}
+
+public function download($id)
+{
+    $materi = Materi::findOrFail($id);
+    $filePath = storage_path('app/' . $materi->file);
+
+    if (file_exists($filePath)) {
+        return response()->download($filePath);
+    } else {
+        return redirect()->back()->with('error', 'File tidak ditemukan.');
     }
+}
 
-    
+
 }
