@@ -32,6 +32,16 @@
                                 <a href="{{ route('catatan.download', $catatanItem->id) }}" class="btn btn-primary mt-3">
                                     <i class="fa-solid fa-download"></i> Download File
                                 </a>
+                                @if (auth()->user()->id == $catatanItem->user_id || Auth::user()->hasRole('admin'))
+                                    <form action="{{ route('catatan.destroy', $catatanItem->id) }}" method="POST"
+                                        class="mt-3">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">
+                                            <i class="fa-solid fa-trash"></i> Delete
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </div>

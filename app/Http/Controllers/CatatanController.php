@@ -35,37 +35,13 @@ class CatatanController extends Controller
         return view('catatan.create');
     }
 
-    // public function storeCatatan(Request $request)
-    // {
-    //     $request->validate([
-    //         'judul' => 'required|string|max:255',
-    //         'deskripsi' => 'required|string',
-    //         'file' => 'required|mimes:pdf,doc,docx,pptx,png,jpg,jpeg|max:10240', // Maksimum 10MB
-    //     ]);
-
-    //     // Simpan file di direktori storage/app/public/catatan_files
-    //     $filePath = $request->file('file')->store('public/catatan_files');
-
-    //     // Dapatkan nama file yang disimpan
-    //     $fileName = basename($filePath);
-
-    //     Catatan::create([
-    //         'judul' => $request->judul,
-    //         'deskripsi' => $request->deskripsi,
-    //         'file' => $fileName, // Simpan hanya nama file, bukan path lengkap
-    //         'user_id' => Auth::id(),
-    //     ]);
-
-    //     return redirect()->route('catatan.show')->with('success', 'Catatan berhasil ditambahkan!');
-    // }
-
     public function storeCatatan(Request $request)
 {
     $request->validate([
         'judul' => 'required|string|max:255',
         'deskripsi' => 'required|string',
-        'file' => 'required|mimes:pdf,doc,docx,pptx,png,jpg,jpeg|max:10240', // Maksimum 10MB
-        'gambar' => 'nullable|mimes:png,jpg,jpeg|max:10240', // Maksimum 10MB
+        'file' => 'required|mimes:pdf,doc,docx,pptx,png,jpg,jpeg,zip,rar|max:10240', // Max 10MB
+        'gambar' => 'nullable|mimes:png,jpg,jpeg|max:2048', // Max 2MB
     ]);
 
     // Simpan file catatan
@@ -108,4 +84,24 @@ class CatatanController extends Controller
         return redirect()->back()->with('error', 'File tidak ditemukan.');
     }
 }
+
+//Menghapus catatan
+public function destroy($id)
+{
+    $catatan = Catatan::findOrFail($id);
+
+    // Cek apakah pengguna yang sedang login adalah pemilik catatan atau admin
+    if ($catatan->user_id == Auth::id() || Auth::user()->hasRole('admin')) {
+        // Hapus file dari storage
+        Storage::delete('public/catatan_files/' . $catatan->file);
+
+        // Hapus catatan dari database
+        $catatan->delete();
+
+        return redirect()->route('catatan.show')->with('success', 'Catatan berhasil dihapus.');
+    } else {
+        return redirect()->route('catatan.show')->with('error', 'Anda tidak memiliki izin untuk menghapus catatan ini.');
+    }
+}
+
 }

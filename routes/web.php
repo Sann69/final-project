@@ -36,38 +36,41 @@ Route::get('/login/google/callback', [UserController::class, 'loginGoogleCallbac
 Route::get('/', [UserController::class, 'home'])->name('home.page');
 
 // Profile
-Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile.show')->middleware('auth');
-Route::get('/profile/edit', [ProfileController::class, 'editProfile'])->name('profile.edit');
-Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update');
+Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile.show')->middleware('authenticate');
+Route::get('/profile/edit', [ProfileController::class, 'editProfile'])->name('profile.edit')->middleware('authenticate');
+Route::post('/profile/update', [ProfileController::class, 'updateProfile'])->name('profile.update')->middleware('authenticate');
 //Route::get('/home', [ProfileController::class, 'index'])->name('home');
 
-// Bookmark
-Route::get('/bookmark', [UserController::class, 'showBookmark'])->name('bookmark.show');
-
 // Catatan
-Route::get('/catatan', [CatatanController::class, 'showCatatan'])->name('catatan.show');
-Route::get('/catatan/my', [CatatanController::class, 'showCatatanSaya'])->name('catatanSaya.show');
-Route::get('/catatan/create', [CatatanController::class, 'createCatatan'])->name('catatan.create');
-Route::post('/catatan/store', [CatatanController::class, 'storeCatatan'])->name('catatan.store');
-Route::get('/catatan/search', [CatatanController::class, 'search'])->name('catatan.search');
-Route::get('/catatan/{id}/download', [CatatanController::class, 'download'])->name('catatan.download');
+Route::get('/catatan', [CatatanController::class, 'showCatatan'])->name('catatan.show')->middleware('authenticate');
+Route::get('/catatan/my', [CatatanController::class, 'showCatatanSaya'])->name('catatanSaya.show')->middleware('authenticate');
+Route::get('/catatan/create', [CatatanController::class, 'createCatatan'])->name('catatan.create')->middleware('authenticate');
+Route::post('/catatan/store', [CatatanController::class, 'storeCatatan'])->name('catatan.store')->middleware('authenticate');
+Route::get('/catatan/search', [CatatanController::class, 'search'])->name('catatan.search')->middleware('authenticate');
+Route::get('/catatan/{id}/download', [CatatanController::class, 'download'])->name('catatan.download')->middleware('authenticate');
+Route::delete('/catatan/{id}', [CatatanController::class, 'destroy'])->name('catatan.destroy')->middleware('authenticate');
+
 
 // Materi
-Route::get('/materi', [MateriController::class, 'showMateri'])->name('materi.show');
-Route::get('/materi/search', [MateriController::class, 'search'])->name('materi.search');
-Route::get('/materi/create', [MateriController::class, 'create'])->name('materi.create');
-Route::post('/materi', [MateriController::class, 'store'])->name('materi.store');
-Route::get('/materi/download/{id}', [MateriController::class, 'download'])->name('materi.download');
+Route::get('/materi', [MateriController::class, 'showMateri'])->name('materi.show')->middleware('authenticate');
+Route::get('/materi/search', [MateriController::class, 'search'])->name('materi.search')->middleware('authenticate');
+Route::get('/materi/create', [MateriController::class, 'create'])->name('materi.create')->middleware('authenticate');
+Route::post('/materi', [MateriController::class, 'store'])->name('materi.store')->middleware('authenticate');
+Route::get('/materi/download/{id}', [MateriController::class, 'download'])->name('materi.download')->middleware('authenticate');
+Route::delete('/materi/{id}', [MateriController::class, 'destroy'])->name('materi.destroy')->middleware('authenticate');
+Route::get('/materi/{id}/edit', [MateriController::class, 'edit'])->name('materi.edit')->middleware('authenticate');
+Route::put('/materi/{id}/update', [MateriController::class, 'update'])->name('materi.update')->middleware('authenticate');
+
 
 // Tentang
 Route::get('/tentang', [UserController::class, 'showTentang'])->name('tentang.page');
 
 //admin
 //Route::get('/admin/{user}', [UserController::class, 'getAdmin'])->name('admin.page')->middleware('authenticate');
-Route::get('/admin', [UserController::class, 'getAdmin'])->name('admin.page')->middleware(['auth', 'role:admin']);
-Route::get('/edit/{user}', [UserController::class, 'editUserAdmin'])->name('edit.user.admin');
-Route::put('/edit/{user}', [UserController::class, 'updateUserAdmin'])->name('update.user');
-Route::delete('/delete/{user}', [UserController::class, 'deleteUserAdmin'])->name('delete.user');
+Route::get('/admin', [UserController::class, 'getAdmin'])->name('admin.page')->middleware(['authenticate', 'role:admin']);
+Route::get('/edit/{user}', [UserController::class, 'editUserAdmin'])->name('edit.user.admin')->middleware('authenticate');
+Route::put('/edit/{user}', [UserController::class, 'updateUserAdmin'])->name('update.user')->middleware('authenticate');
+Route::delete('/delete/{user}', [UserController::class, 'deleteUserAdmin'])->name('delete.user')->middleware('authenticate');
 
 
 

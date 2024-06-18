@@ -17,7 +17,7 @@ class AuthMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::user()) {
-            return redirect()->route('login')->with('error', 'You must login first');
+            return redirect()->route('login.page')->with('error', 'You must login first');
             //abort(403, 'Unauthorized access');
             // return redirect()->route('login');
         }

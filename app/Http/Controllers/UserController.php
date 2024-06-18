@@ -80,13 +80,26 @@ class UserController extends Controller
             'tgl_lahir' => 'required|date',
             'alamat' => 'required',
         ]);
-
+    
         if ($validator->fails()) {
             return redirect()->route('register.page')
                 ->withErrors($validator)
                 ->withInput();
         }
-
+    
+        // Path gambar default
+        $defaultProfilePicture = 'images/profile.png';
+    
+        // Path tujuan di storage
+        $storagePath = 'profile_pictures/' . uniqid() . '.png';
+    
+        // Salin file gambar ke storage
+        if (file_exists(public_path($defaultProfilePicture))) {
+            Storage::disk('public')->put($storagePath, file_get_contents(public_path($defaultProfilePicture)));
+        } else {
+            return redirect()->route('register.page')->with('error', 'Default profile picture not found.');
+        }
+    
         $user = User::create([
             'nama' => $request->nama,
             'email' => $request->email,
@@ -95,20 +108,19 @@ class UserController extends Controller
             'umur' => $request->umur,
             'tgl_lahir' => $request->tgl_lahir,
             'alamat' => $request->alamat,
-            'profile_picture' => 'images/profile.png',
+            'profile_picture' => $storagePath,
         ]);
-
-        // default role -> user (admin/user)
+    
+        // Default role -> user (admin/user)
         $user->assignRole('user');
-
+    
         if ($user) {
-            return redirect()->route('register.page')
-                ->with('success', 'User created successfully');
+            return redirect()->route('register.page')->with('success', 'User created successfully');
         } else {
-            return redirect()->route('register.page')
-                ->with('error', 'Failed to create user');
+            return redirect()->route('register.page')->with('error', 'Failed to create user');
         }
     }
+    
 
     //proses logout
     public function logout()
@@ -126,39 +138,56 @@ class UserController extends Controller
 
     //proses login google
     public function loginGoogleCallback()
-    {
+{
+    try {
         $user = Socialite::driver('google')->user();
+    } catch (\Exception $e) {
+        return redirect()->route('login')->with('error', 'Google login failed: ' . $e->getMessage());
+    }
 
-        $existingUser = User::where('email', $user->email)->first();
+    // Cari pengguna yang sudah terdaftar berdasarkan email
+    $existingUser = User::where('email', $user->email)->first();
 
-        if ($existingUser) {
-            Auth::login($existingUser);
-        } else {
-            $newUser = new User();
-            $newUser->google_id = $user->id;
-            $newUser->nama = $user->name;
-            $newUser->email = $user->email;
-            $newUser->password = Hash::make(Str::random(15));
-            $newUser->gender = 'male';
-            $newUser->umur = 25;
-            $newUser->tgl_lahir = '1996-05-13';
-            $newUser->alamat = 'Jakarta Selatan';
-            $newUser->save();
+    if ($existingUser) {
+        // Jika pengguna sudah ada, langsung login
+        Auth::login($existingUser);
+    } else {
+        // Jika pengguna belum terdaftar, buat pengguna baru
+        $newUser = new User();
+        $newUser->google_id = $user->id; // Simpan ID Google jika diperlukan
+        $newUser->nama = $user->name;
+        $newUser->email = $user->email;
+        $newUser->password = Hash::make(Str::random(15));
+        $newUser->gender = 'male'; 
+        $newUser->umur = 25; 
+        $newUser->tgl_lahir = '1996-05-13'; 
+        $newUser->alamat = 'Jakarta Selatan';
+        
+        // Simpan gambar profil dari Google ke penyimpanan
+        $profilePictureUrl = $user->avatar;
+        if ($profilePictureUrl) {
+            $extension = pathinfo($profilePictureUrl, PATHINFO_EXTENSION);
+            $fileName = 'profile_picture_' . $newUser->id . '.' . $extension;
+            $storagePath = 'profile_pictures/' . $fileName;
 
-            // assign role
-            $newUser->assignRole('user');
+            // Download gambar dari URL dan simpan di storage
+            $imageContents = file_get_contents($profilePictureUrl);
+            Storage::disk('public')->put($storagePath, $imageContents);
 
-            Auth::login($newUser);
+            $newUser->profile_picture = $storagePath;
         }
 
-        return redirect()->route('home.page');
+        $newUser->save();
+
+        // Assign role
+        $newUser->assignRole('user');
+
+        // Login pengguna baru
+        Auth::login($newUser);
     }
 
-    // bookmark
-    public function showBookmark()
-    {
-        return view('bookmark');
-    }
+    return redirect()->route('home.page');
+}
 
      //tentang
     public function showTentang()
@@ -180,29 +209,6 @@ class UserController extends Controller
         }
 
     //proses edit user pada halaman admin
-    // public function updateUserAdmin(Request $request, User $user)
-    // {
-    //     $request->validate([
-    //         'nama' => 'required|string|max:255',
-    //         'email' => 'required|email|max:255|unique:users,email,' . $user->id,
-    //         'gender' => 'required|in:male,female',
-    //         'umur' => 'required|integer|min:0',
-    //         'tgl_lahir' => 'required|date',
-    //         'alamat' => 'required|string|max:500',
-    //     ]);
-
-    //     $user->update([
-    //         'nama' => $request->nama,
-    //         'email' => $request->email,
-    //         'gender' => $request->gender,
-    //         'umur' => $request->umur,
-    //         'tgl_lahir' => $request->tgl_lahir,
-    //         'alamat' => $request->alamat,
-    //     ]);
-
-    //     return redirect()->route('edit.user.admin', $user->id)->with('success', 'User updated successfully');
-    // }
-
     public function updateUserAdmin(Request $request, User $user)
 {
     $request->validate([

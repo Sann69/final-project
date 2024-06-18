@@ -30,9 +30,9 @@
                 <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required>{{ old('deskripsi') }}</textarea>
             </div>
             <div class="mb-3">
-                <label for="file" class="form-label">File Catatan (PDF, DOC, DOCX, PPTX, PNG, JPG, JPEG)</label>
+                <label for="file" class="form-label">File Catatan</label>
                 <input type="file" class="form-control" id="file" name="file"
-                    accept=".pdf,.doc,.docx,.pptx,.png,.jpg,.jpeg" required>
+                    accept=".pdf,.doc,.docx,.pptx,.png,.jpg,.jpeg,.zip,.rar" required>
             </div>
             <div class="mb-3">
                 <label for="gambar" class="form-label">Gambar</label>

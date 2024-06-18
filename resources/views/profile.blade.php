@@ -1,29 +1,31 @@
 @extends('layouts.master')
 @push('style')
-    <style>
-        .fa-camera {
-            position: relative;
-            top: 25%;
-            left: -8.5%;
-        }
-    </style>
 @endpush
 
 @section('content')
-    <div class="container mt-5 bg-info">
-        <div class="row">
-            <div class="col-md-5 offset-1 rounded my-lg-5 px-3 py-3 me-3" style="border: 3px solid black">
+    <div class="container mt-5">
+        <div class="row border border-dark rounded">
+            <div class="col-md-5 offset-1 rounded my-lg-5 px-3 py-3 me-3">
                 <div class="d-flex justify-content-between">
                     <div class="text-center w-100">
-                        <img src="{{ Auth::user()->profile_picture }}" alt="Profile Picture" class="w-25 rounded-circle">
-                        <i class="fa fa-camera" aria-hidden="true"></i>
+                        @if (Auth::user()->profile_picture)
+                            <img src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile Picture"
+                                class="w-25 rounded-circle">
+                        @else
+                            <img src="{{ asset('default-profile-picture.jpg') }}" alt="Default Profile Picture"
+                                class="w-25 rounded-circle">
+                        @endif
 
                         <p class="mt-2 fw-bold">{{ Auth::user()->nama }}</p>
+
+                        <div class="d-flex justify-content-center">
+                            <a href="{{ route('profile.edit') }}" class="btn btn-md btn-primary mt-3 w-25">Edit Profile</a>
+                        </div>
 
                     </div>
                 </div>
             </div>
-            <div class="col-md-5 rounded my-lg-5 px-3 py-3" style="border: 3px solid black">
+            <div class="col-md-5 rounded my-lg-5 px-3 py-3">
                 <div class="d-flex justify-content-between">
                     <div class="w-50">
                         <p class="fw-bold">Nama </p>
@@ -43,11 +45,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-
-        <div class="d-flex justify-content-center">
-            <a href="{{ route('profile.edit') }}" class="btn btn-md btn-primary mt-3 w-25">Edit Profile</a>
         </div>
 
     </div>

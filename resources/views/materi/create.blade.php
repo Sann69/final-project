@@ -29,9 +29,9 @@
                 <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required></textarea>
             </div>
             <div class="mb-3">
-                <label for="file" class="form-label">File Materi (PDF, DOC, DOCX)</label>
-                <input type="file" class="form-control" id="file" name="file" accept=".pdf,.doc,.docx,.pptx"
-                    required>
+                <label for="file" class="form-label">File Materi</label>
+                <input type="file" class="form-control" id="file" name="file"
+                    accept=".pdf,.doc,.docx,.pptx,.png,.jpg,.jpeg,.zip,.rar" required>
             </div>
             <div class="mb-3">
                 <label for="gambar" class="form-label">Gambar</label>
