@@ -33,6 +33,10 @@
                                     <i class="fa-solid fa-download"></i> Download File
                                 </a>
                                 @if (auth()->user()->id == $catatanItem->user_id || Auth::user()->hasRole('admin'))
+                                    <a href="{{ route('catatan.edit', $catatanItem->id) }}" class="btn btn-success mt-3">
+                                        <i class="fa-solid fa-edit"></i> Edit
+                                    </a>
+
                                     <form action="{{ route('catatan.destroy', $catatanItem->id) }}" method="POST"
                                         class="mt-3">
                                         @csrf

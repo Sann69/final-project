@@ -49,7 +49,8 @@ Route::post('/catatan/store', [CatatanController::class, 'storeCatatan'])->name(
 Route::get('/catatan/search', [CatatanController::class, 'search'])->name('catatan.search')->middleware('authenticate');
 Route::get('/catatan/{id}/download', [CatatanController::class, 'download'])->name('catatan.download')->middleware('authenticate');
 Route::delete('/catatan/{id}', [CatatanController::class, 'destroy'])->name('catatan.destroy')->middleware('authenticate');
-
+Route::get('/catatan/{id}/edit', [CatatanController::class, 'edit'])->name('catatan.edit')->middleware('authenticate');
+Route::put('/catatan/{id}/update', [CatatanController::class, 'update'])->name('catatan.update')->middleware('authenticate');
 
 // Materi
 Route::get('/materi', [MateriController::class, 'showMateri'])->name('materi.show')->middleware('authenticate');

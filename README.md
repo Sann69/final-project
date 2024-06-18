@@ -10,6 +10,7 @@
 -   php artisan key:generate
 -   php artisan migrate
 -   php artisan db:seed --class=CreateRole
+-   php artisan db:seed --class=AdminSeeder
 -   composer require laravel/socialite (jika perlu)
 -   composer require spatie/laravel-permission (jika perlu)
 -   php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider" (jika perlu)

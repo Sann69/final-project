@@ -104,4 +104,51 @@ public function destroy($id)
     }
 }
 
+//menuju form edit
+public function edit($id)
+{
+    $catatan = Catatan::findOrFail($id);
+    return view('catatan.edit', compact('catatan'));
+}
+
+//proses edit
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'deskripsi' => 'required|string',
+        'file' => 'nullable|mimes:pdf,doc,docx,pptx,png,jpg,jpeg,zip,rar|max:10240',
+        'gambar' => 'nullable|mimes:png,jpg,jpeg|max:1024',
+    ]);
+
+    $catatan = Catatan::findOrFail($id);
+
+    if ($request->hasFile('file')) {
+        if ($catatan->file) {
+            Storage::disk('public')->delete('files/' . $catatan->file);
+        }
+        $file = $request->file('file');
+        $filePath = 'files/' . uniqid() . '.' . $file->getClientOriginalExtension();
+        Storage::disk('public')->put($filePath, file_get_contents($file));
+        $catatan->file = basename($filePath);
+    }
+
+    if ($request->hasFile('gambar')) {
+        if ($catatan->gambar) {
+            Storage::disk('public')->delete('gambar_files/' . $catatan->gambar);
+        }
+        $gambar = $request->file('gambar');
+        $gambarPath = 'gambar_files/' . uniqid() . '.' . $gambar->getClientOriginalExtension();
+        Storage::disk('public')->put($gambarPath, file_get_contents($gambar));
+        $catatan->gambar = basename($gambarPath);
+    }
+
+    $catatan->judul = $request->judul;
+    $catatan->deskripsi = $request->deskripsi;
+    $catatan->save();
+
+    return redirect()->route('catatan.show')->with('success', 'Catatan berhasil diperbarui');
+}
+
+
 }
